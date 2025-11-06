@@ -7,19 +7,29 @@
 #include <map>
 
 
-std::ifstream Lan_in("Language/Lan.txt");
-std::ifstream ConFig_in("ConfigurationFile/ConFig_data");
+extern std::ifstream Lan_in;
+extern std::ifstream ConFig_in;
+
+
 
 namespace fs = std::filesystem;
 
-std::string Language;
-
 class language {
 private:
-    std::map<std::string, std::string> data;
-public:
-    void read() {
 
+public:
+    std::map<std::string, std::string> Lan_data;
+    void read(std::ifstream& Lan_in) {
+
+        std::string Lan_in_string;
+        int Lan_in_line = 0;
+        if (!Lan_in.is_open()) {
+            system("clear||cls");
+            throw std::runtime_error("语言文件打开失败");
+        }
+        while (std::getline(Lan_in, Lan_in_string)) {
+            Lan_data["Line_" + std::to_string(Lan_in_line++)] = Lan_in_string;
+        }
     }
 };
 
@@ -48,29 +58,44 @@ void Self_Check() {// 自检函数
         }
 
         std::cout << "自检通过: 必要文件和文件夹都存在" << std::endl;
-    
+        Sleep(1000);
+		system("clear||cls");
 }
 int main(){
 	try {// 主程序入口
         Self_Check();
-        ConFig_in >> Language;
-		/*
-        std::cout << "欢迎使用 软件集团 游戏" << std::endl << std::endl;
-		std::cout << "按回车键开始游戏，按ESC键退出..." << std::endl;
+
+        std::ifstream Lan_in("Language/Lan.txt");
+        std::ifstream ConFig_in("ConfigurationFile/ConFig_data");
+
+        if (!Lan_in.is_open()) {
+            throw std::runtime_error("无法打开语言文件 Lan.txt");
+        }
+        if (!ConFig_in.is_open()) {
+            throw std::runtime_error("无法打开配置文件 ConFig_data");
+        }
+
+        language lan;
+        lan.read(Lan_in);
+        
+        std::cout << lan.Lan_data["Line_0"] << std::endl << std::endl;
+		std::cout << lan.Lan_data["Line_1"] << std::endl << std::endl;
+        
         char choice = _getch();  // 获取单个字符输入，不显示在屏幕上
-
-        if (choice == 27) {  // ESC键的ASCII码是27
-            std::cout << "程序退出！\n";
+        switch (choice) {
+            case 27: {
+                std::cout << "正在退出..." << std::endl << std::endl;
+                break;
+            };
+            case 13: {
+                
+            }
+            case 83: {
+                system("clear||cls");
+                std::cout << "" << std::endl << std::endl ;
+            }
         }
-        else if (choice == 13) {  // 回车键的ASCII码是13
-            std::cout << "继续执行...\n\n";
-
-        }
-        */
-        std::cout << Language;
-        char choice = _getch();
-
-
+        
 
 
 
