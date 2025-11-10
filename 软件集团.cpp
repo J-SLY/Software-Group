@@ -104,7 +104,7 @@ void save_find_list() {
 */
 
 int name_back(std::string name) {
-    int back = 1;
+    long long back = 1;
     for (int i = 0; i < name.size(); i++) {
         back *= name[i];
     }
