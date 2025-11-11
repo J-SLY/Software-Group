@@ -10,13 +10,12 @@
 using namespace std;
 namespace fs = std::filesystem;
 
+
+
 void Copyright() {
     system("cls");
     std::cout << "& 2025 JSLY. 保留所有权利" << std::endl<<std::endl;
 }
-
-
-
 
 
 
@@ -250,7 +249,7 @@ int main() {
 
                     if (choice > 0 && choice <= sav.save_name_list.size()) {
                         std::string selectedSave = sav.save_name_list[choice - 1];
-                        std::cout << "已选择存档: " << selectedSave << std::endl;
+                        std::cout << std::endl << "已选择存档:     " << selectedSave << std::endl;
                         // 这里可以添加加载存档的逻辑
                     }
                     else {
@@ -265,9 +264,23 @@ int main() {
         }
         case 'S':case 's':{
             Copyright();
-            std::cout << "" << std::endl << std::endl;
+            std::cout << "已进入配置模式：" << std::endl << std::endl;
+            std::cout << "修改语言文件 [L]" << std::endl;
+            std::cout << "修改语言文件 [L]" << std::endl;
+            std::cout << "修改语言文件 [L]" << std::endl;
+            std::cout << "修改语言文件 [L]" << std::endl;
+            choice = _getch();
+            switch (choice) {
+                case 'L':case 'l': {
+                    std::cout <<std::endl;
+                    for (auto i = lan.Lan_data.begin(); i != lan.Lan_data.end(); i++) {
+                        std::cout << i->second << std::endl;
+                    }
+                }
+            }
+            choice = _getch();
             break;
-        }
+        } 
         }
     }
     catch (const std::runtime_error& e) {
